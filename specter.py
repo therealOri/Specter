@@ -1,3 +1,4 @@
+import os
 from marshal import dumps
 from binascii import hexlify
 from random import randint, shuffle
@@ -44,6 +45,11 @@ banner = Add.Add(banner1, banner2, center=True)
 purple = Col.StaticMIX([Col.blue, Col.purple])
 
 
+
+def clear():
+    os.system("clear||cls")
+
+
 def stage(text: str, symbol: str = '...') -> str:
     ppurple = purple if symbol == '...' else Col.light_blue
     return f""" {Col.Symbol(symbol, ppurple, Col.blue)} {ppurple}{text}{Col.reset}"""
@@ -56,7 +62,6 @@ class Specter:
 
     def specterize(script: str) -> str:
         print(stage("Starting specterization!"))
-        # print(stage("Preparing anti skid layer...")) just to be sure
         script = Specter.anti_skid(script=script)
         print(stage("Adding layer 1!"))
         script = Specter.layer_1(script=script)
@@ -73,9 +78,9 @@ class Specter:
         return "\x00".join(str(ord(x)+key) for x in text)
 
     def randvar() -> str:
-        var = randint(1000, 9999)
+        var = randint(1000, 99999)
         while var in Specter.vars:
-            var = randint(1000, 9999)
+            var = randint(1000, 99999)
         Specter.vars.append(var)
         return f"__{var}__"
     
@@ -86,18 +91,15 @@ class Specter:
         return r"""
 # GG! You just deobfuscated Specter
 
-# https://github.com/billythegoat356/Specter
+# https://github.com/therealOri/Specter
 
-# by billythegoat356
-
-# join discord.gg/plague for more Python tools!
+# by billythegoat356 & therealOri
 
 
 try:
     if (
-        __author__ != "billythegoat356" or
-        __github__ != "https://github.com/billythegoat356/Specter" or
-        __discord__ != "https://discord.gg/plague" or
+        __author__ != "billythegoat356 & therealOri" or
+        __github__ != "https://github.com/therealOri/Specter" or
         __license__ != "EPL-2.0" or
         __code__ != "Hello world!" or
         "Specter" not in globals() or
@@ -105,7 +107,7 @@ try:
     ):
         int('skid')
 except:
-    input("You just executed a file obfuscated with Specter!\n\nAuthor: billythegoat356\nGitHub: https://github.com/billythegoat356/Specter\nDiscord: https://discord.gg/plague")
+    input("You have executed a file obfuscated with Specter!\n\nAuthor: billythegoat356 & therealOri\nGitHub: https://github.com/therealOri/Specter")
     __import__('sys').exit()    
 
 
@@ -163,16 +165,13 @@ except:
         script = fr"""
 # this code has been obfuscated with Specter
 
-# https://github.com/billythegoat356/Specter
+# https://github.com/therealOri/Specter
 
-# by billythegoat356
-
-# join discord.gg/plague for more Python tools!
+# by billythegoat356 & therealOri
 
 
-__author__ = "billythegoat356"
-__github__ = "https://github.com/billythegoat356/Specter"
-__discord__ = "https://discord.gg/plague"
+__author__ = "billythegoat356 & therealOri"
+__github__ = "https://github.com/therealOri/Specter"
 __license__ = "EPL-2.0"
 __code__ = "Hello world!"
 
@@ -209,24 +208,26 @@ def main():
     print()
     print(Colorate.Diagonal(Colors.purple_to_blue, Center.XCenter(banner + '\n\n')))
 
-    file = input(stage(f"Drag the file you want to obfuscate {Col.blue}-> {Col.reset}", "?")).replace('"','').replace("'","")
+    file_path = input(stage(f"Drag the file you want to obfuscate here: {Col.blue}-> {Col.reset}", "?")).replace('\\', ' ').strip().replace('"','').replace("'","")
     print('\n')
 
     try:
-        with open(file, mode='rb') as f:
+        with open(file_path, mode='rb') as f:
             script = f.read().decode('utf-8')
-        filename = file.split('\\')[-1]
     except:
         input(f""" {Col.Symbol('!', Col.light_red, Col.blue)} {Col.light_red}Invalid file!{Col.reset}""")
         exit()
 
     script = Specter.specterize(script=script)
 
-    with open(f'obf-{filename}', mode='wb') as f:
+    with open(file_path, mode='wb') as f:
         f.write(script.encode('utf-8'))
     
     print('\n')
     input(stage("Done!", '!'))
 
 
-main()
+
+if __name__ == '__main__':
+    clear()
+    main()
