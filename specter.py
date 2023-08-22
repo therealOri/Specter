@@ -4,7 +4,7 @@ from binascii import hexlify
 from random import randint, shuffle
 
 from pystyle import *
-
+import lzma
 
 
 
@@ -105,7 +105,7 @@ try:
         "Specter" not in globals() or
         "Func" not in globals()
     ):
-        int('skid')
+        print('skid')
 except:
     input("You have executed a file obfuscated with Specter!\n\nAuthor: billythegoat356 & therealOri\nGitHub: https://github.com/therealOri/Specter")
     __import__('sys').exit()    
@@ -220,11 +220,21 @@ def main():
 
     script = Specter.specterize(script=script)
 
-    with open(file_path, mode='wb') as f:
-        f.write(script.encode('utf-8'))
+    patch=True #Compressing script to allow for smaller file sizes.
+    if patch == True:
+        compressed_script = lzma.compress(script.encode('utf-8'))
+        script2 = f'''import lzma
+stuff = lzma.decompress({compressed_script})
+exec(stuff.decode())
+'''
+        with open(file_path, mode='wb') as f:
+            f.write(script2.encode('utf-8'))
+    else:
+        with open(file_path, mode='wb') as f:
+            f.write(script.encode('utf-8'))
     
     print('\n')
-    input(stage("Done!", '!'))
+    input(stage('Done! - Press "enter" to continue', '!'))
 
 
 
