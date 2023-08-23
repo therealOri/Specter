@@ -220,7 +220,7 @@ def main():
 
     script = Specter.specterize(script=script)
 
-    patch=True #Compressing script to allow for smaller file sizes.
+    patch=True #Compressing script to allow for bigger file sizes.
     if patch == True:
         compressed_script = lzma.compress(script.encode('utf-8'))
         script2 = f'''import lzma
